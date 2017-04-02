@@ -1,18 +1,40 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
+import Header from './common/header'
+import Recipes from './components/recipe'
+import Api from './api/api'
 
 class App extends Component {
+
+    state = {
+        recipes: [],
+        search: ""
+    };
+
+    componentDidMount(){
+        Api("apple")
+            .then(ingredients => this.setState({recipes: ingredients}))
+    }
+    handleInputChange = (e) => {
+        e.preventDefault();
+        this.setState({search: e.target.value})
+    };
+    handleSearch = () => {
+        console.log(this.state.search);
+        Api(this.state.search)
+            .then(ingredients => this.setState({recipes: ingredients}))
+    };
   render() {
+
     return (
-      <div className="App">
-        <div className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h2>Welcome to React</h2>
-        </div>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
+      <div>
+        <Header
+            handleInputChange={this.handleInputChange}
+            value={this.state.search}
+            handleSearch={this.handleSearch}
+        />
+        <Recipes recipes={this.state.recipes}/>
       </div>
     );
   }
