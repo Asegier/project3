@@ -34,7 +34,7 @@ class App extends Component {
             value={this.state.search}
             handleSearch={this.handleSearch}
         />
-        <Recipes recipes={this.state.recipes}/>
+        {/*<Recipes recipes={this.state.recipes}/>*/}
       </div>
     );
   }
